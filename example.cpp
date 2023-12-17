@@ -22,7 +22,7 @@ void render_esp() {
 				if (sdk.world_to_screen(originLoc, originScr))
 				{
 					if (vars.loot_id)
-						draw.text(std::to_string(loot.id), ImVec2(int(originScr.x), int(originScr.y + 11)), ImGui::GetFontSize(), vars.loot_id_color.c(), nullptr, false, true);
+						draw.text(std::to_string(loot.id), ImVec2(int(originScr.x), int(originScr.y + 11)), ImGui::GetFontSize(), vars.loot_id_color.c(), nullptr, true, true);
 
 					if (loot.hash.count(loot.id))
 					{

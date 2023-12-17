@@ -185,8 +185,9 @@ public:
 	float distance;
 
 	bool valid() {
-		if ((this->origin.x != 0) &&
-			(this->ptr != 0)) return true;
+		if ((this->ptr != 0) && 
+			(this->origin.x != 0))
+			return true;
 
 		return false;
 	}

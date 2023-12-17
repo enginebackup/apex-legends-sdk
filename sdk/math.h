@@ -32,7 +32,7 @@ public:
 		this->y = y;
 	};
 
-	bool is_valid()
+	bool valid()
 	{
 		return (x != 0 && y != 0);
 	}
@@ -276,7 +276,7 @@ public:
 		return;
 	}*/
 
-	bool is_valid() const
+	bool valid() const
 	{
 		return !(x == 0.f && y == 0.f && z == 0.f) || (x == -1.f && y == -1.f && z == -1.f);
 	}
@@ -461,7 +461,7 @@ public:
 		return quaternion;
 	}
 
-	bool is_valid() const
+	bool valid() const
 	{
 		return !((x == 0.f && y == 0.f && z == 0.f && w == 0.f) || (x == -1.f && y == -1.f && z == -1.f && w == -1.f));
 	}
