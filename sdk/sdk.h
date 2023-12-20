@@ -126,7 +126,6 @@ public:
 	}
 
 	void cache_thread() {
-		loot.init();
 		while (true) {
 			if (vars.destroy)
 				return;
@@ -224,6 +223,10 @@ public:
 			this->h = h;
 		}
 		int x, y, w, h;
+
+		bool valid() const {
+			return x != 0 && y != 0 && w != 0 && h != 0;
+		}
 	};
 
 	box_t create_box(const c_vec3& origin, const c_vec3& mins, const c_vec3& maxs) {

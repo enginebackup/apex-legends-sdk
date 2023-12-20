@@ -24,60 +24,60 @@ void render_esp() {
 					if (vars.loot_id)
 						draw.text(std::to_string(loot.id), ImVec2(int(originScr.x), int(originScr.y + 11)), ImGui::GetFontSize(), vars.loot_id_color.c(), nullptr, true, true);
 
-					if (loot.hash.count(loot.id))
+					if (loot.table.count(loot.id))
 					{
 						std::string loot_text;
-						loot_text = loot.hash[loot.id].name;
+						loot_text = loot.table[loot.id].name;
 						if (vars.loot_distance)
 							loot_text += _(" [") + std::to_string((int)loot.distance) + _("m]");
 
-						if (vars.loot_deathbox && loot.hash[loot.id].type == loot.type::deathbox) {
+						if (vars.loot_deathbox && loot.table[loot.id].type == loot.type::deathbox) {
 							draw.text(loot_text, ImVec2(int(originScr.x), int(originScr.y)), ImGui::GetFontSize(), vars.loot_deathbox_color.c(), nullptr, true, true);
 						}
 
-						if (vars.loot_survival && loot.hash[loot.id].type == loot.type::survival) {
+						if (vars.loot_survival && loot.table[loot.id].type == loot.type::survival) {
 							draw.text(loot_text, ImVec2(int(originScr.x), int(originScr.y)), ImGui::GetFontSize(), vars.loot_survival_color.c(), nullptr, true, true);
 						}
 
-						if (vars.loot_medic && loot.hash[loot.id].type == loot.type::medic) {
+						if (vars.loot_medic && loot.table[loot.id].type == loot.type::medic) {
 							draw.text(loot_text, ImVec2(int(originScr.x), int(originScr.y)), ImGui::GetFontSize(), vars.loot_medic_color.c(), nullptr, true, true);
 						}
 
-						if (vars.loot_grenade && loot.hash[loot.id].type == loot.type::grenade) {
+						if (vars.loot_grenade && loot.table[loot.id].type == loot.type::grenade) {
 							draw.text(loot_text, ImVec2(int(originScr.x), int(originScr.y)), ImGui::GetFontSize(), vars.loot_grenade_color.c(), nullptr, true, true);
 						}
 
-						if (vars.loot_weapon && loot.hash[loot.id].type == loot.type::weapon) {
+						if (vars.loot_weapon && loot.table[loot.id].type == loot.type::weapon) {
 							draw.text(loot_text, ImVec2(int(originScr.x), int(originScr.y)), ImGui::GetFontSize(), vars.loot_weapon_color.c(), nullptr, true, true);
 						}
 
 						if (vars.loot_ammo) {
-							if (vars.loot_light_ammo && loot.hash[loot.id].type == loot.type::light_ammo) {
+							if (vars.loot_light_ammo && loot.table[loot.id].type == loot.type::light_ammo) {
 								draw.text(loot_text, ImVec2(int(originScr.x), int(originScr.y)), ImGui::GetFontSize(), vars.loot_light_ammo_color.c(), nullptr, true, true);
 							}
 
-							if (vars.loot_energy_ammo && loot.hash[loot.id].type == loot.type::energy_ammo) {
+							if (vars.loot_energy_ammo && loot.table[loot.id].type == loot.type::energy_ammo) {
 								draw.text(loot_text, ImVec2(int(originScr.x), int(originScr.y)), ImGui::GetFontSize(), vars.loot_energy_ammo_color.c(), nullptr, true, true);
 							}
 
-							if (vars.loot_shotgun_ammo && loot.hash[loot.id].type == loot.type::shotgun_ammo) {
+							if (vars.loot_shotgun_ammo && loot.table[loot.id].type == loot.type::shotgun_ammo) {
 								draw.text(loot_text, ImVec2(int(originScr.x), int(originScr.y)), ImGui::GetFontSize(), vars.loot_shotgun_ammo_color.c(), nullptr, true, true);
 							}
 
-							if (vars.loot_heavy_ammo && loot.hash[loot.id].type == loot.type::heavy_ammo) {
+							if (vars.loot_heavy_ammo && loot.table[loot.id].type == loot.type::heavy_ammo) {
 								draw.text(loot_text, ImVec2(int(originScr.x), int(originScr.y)), ImGui::GetFontSize(), vars.loot_heavy_ammo_color.c(), nullptr, true, true);
 							}
 
-							if (vars.loot_sniper_ammo && loot.hash[loot.id].type == loot.type::sniper_ammo) {
+							if (vars.loot_sniper_ammo && loot.table[loot.id].type == loot.type::sniper_ammo) {
 								draw.text(loot_text, ImVec2(int(originScr.x), int(originScr.y)), ImGui::GetFontSize(), vars.loot_sniper_ammo_color.c(), nullptr, true, true);
 							}
 						}
 
-						if (vars.loot_scope && loot.hash[loot.id].type == loot.type::scope) {
+						if (vars.loot_scope && loot.table[loot.id].type == loot.type::scope) {
 							draw.text(loot_text, ImVec2(int(originScr.x), int(originScr.y)), ImGui::GetFontSize(), vars.loot_scope_color.c(), nullptr, true, true);
 						}
 
-						if (vars.loot_modification && loot.hash[loot.id].type == loot.type::modification) {
+						if (vars.loot_modification && loot.table[loot.id].type == loot.type::modification) {
 							draw.text(loot_text, ImVec2(int(originScr.x), int(originScr.y)), ImGui::GetFontSize(), vars.loot_modification_color.c(), nullptr, true, true);
 						}
 					}
@@ -95,12 +95,15 @@ void render_esp() {
 
 				auto box = sdk.create_box(player.origin, player.min, player.max);
 
-				if (box.x && box.y && box.w && box.h) {
+				if (box.valid()) {
 					if (vars.player_box) {
 						draw.box(ImVec2(box.x, box.y), ImVec2(box.w, box.h), player.knocked ? ImColor(vars.player_box_knocked_color.c()) : ImColor(vars.player_box_color.c()));
 					}
 					if (vars.player_health) {
-						draw.health_bar(ImVec2(box.x - 4, box.y), ImVec2(4, box.h), 2, player.hp, player.hp_max, player.shield, player.shield_max, vars.player_health_gradient, vars.player_health_fullhp_color.c(), vars.player_health_lowhp_color.c(), vars.player_health_fullar_color.c(), vars.player_health_lowar_color.c());
+						draw.health_bar(ImVec2(box.x - 3, box.y), ImVec2(4, box.h), 2, player.hp, player.hp_max, vars.player_health_gradient, vars.player_health_full_color.c(), vars.player_health_low_color.c());
+					}
+					if (vars.player_armor) {
+						draw.health_bar(ImVec2(box.x + box.w + 5, box.y), ImVec2(4, box.h), 2, player.shield, player.shield_max, vars.player_armor_gradient, vars.player_armor_full_color.c(), vars.player_armor_low_color.c());
 					}
 					std::string text;
 					if (vars.player_name || vars.player_distance) {
@@ -111,7 +114,7 @@ void render_esp() {
 							text += _(" [") + std::to_string((int)player.distance) + _("m]");
 
 						//char buffer[256];
-						//sprintf_s(buffer, " ptr: %llx", static_cast<unsigned long long>(player.ptr));
+						//sprintf_s(buffer, " ptr: %llx", static_cast<uint64_t>(player.ptr));
 
 						//text += buffer;
 

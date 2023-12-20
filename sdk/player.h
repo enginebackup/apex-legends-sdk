@@ -141,13 +141,11 @@ public:
 	c_vec3 max;
 
 	bool valid() {
-		if ((this->ptr != 0) && 
-			(this->team != 0) && 
-			(this->hp > 0) && 
-			(this->origin.x != 0))
-			return true;
-
-		return false;
+		return 
+			this->ptr != 0 &&
+			this->team != 0 && 
+			this->hp > 0 && 
+			this->origin.x != 0;
 	}
 
 	void get_data(uint64_t pointer) {
